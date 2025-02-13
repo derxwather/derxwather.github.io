@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>derxDEV@terminal:~$</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            animation: crt 0.1s infinite;
+        }
+
+        @keyframes crt {
+            0% { text-shadow: 2px 2px 8px rgba(0,255,0,0.4); }
+            100% { text-shadow: -2px -2px 8px rgba(0,255,0,0.4); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        pre {
+            color: #0f0;
+            font-size: 12px;
+            white-space: pre;
+        }
+
+        .prompt::before {
+            content: "derxDEV@terminal:~$ ";
+            color: #0f0;
+        }
+
+        .command {
+            color: #0ff;
+        }
+
+        .output {
+            color: #0f0;
+            margin-left: 20px;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .ascii-art {
+            color: #0f0;
+            margin: 20px 0;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #0f0;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .links a:hover {
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ascii-art">
+<pre>
+    ____  ___________  ____  ________ _    __
+   / __ \/ ____/ __ \/ __ \/ ____/ /| |  / /
+  / / / / __/ / /_/ / / / / /   / __  | / / 
+ / /_/ / /___/ _, _/ /_/ / /___/ /_/ |/ /  
+/_____/_____/_/ |_|\____/\____/\____//_/   
+                                           
+</pre>
+        </div>
+
+        <div class="prompt">whoami</div>
+        <div class="output">
+            > Just another geek who loves coding and Linux
+            > Currently exploring the digital universe
+            > Powered by coffee and curiosity
+        </div>
+
+        <div class="prompt">cat skills.txt</div>
+        <div class="output">
+            > Python | Flask | HTML/CSS
+            > Linux Enthusiast
+            > Git Master
+            > Terminal Warrior
+        </div>
+
+        <div class="prompt">ls -la projects/</div>
+        <div class="output">
+            > Coming soon...
+            > [STATUS: In Development] <span class="blink">█</span>
+        </div>
+
+        <div class="links">
+            <a href="https://github.com/derxwather">[GITHUB]</a>
+            <a href="mailto:derxwather@gmail.com">[CONTACT]</a>
+        </div>
+    </div>
+
+    <canvas class="matrix-rain" id="matrix"></canvas>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = "01";
+        const fontSize = 10;
+        const columns = canvas.width/fontSize;
+        const drops = [];
+
+        for(let x = 0; x < columns; x++)
+            drops[x] = 1;
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+                
+                if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+                    drops[i] = 0;
+                
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+    </script>
+</body>
+</html>
